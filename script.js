@@ -1,20 +1,28 @@
 function mincost(arr)
 { 
-	let totalCost = 0;
 
-  // Step 1: Initialize a min-heap (priority queue) and add all ropes to it
-  const minHeap = new MinHeap((a, b) => a - b);  // min heap (smallest element on top)
-  arr.forEach(length => minHeap.push(length));
+    let totalCost = 0;
 
-  // Step 2: While there is more than one rope, extract two smallest ropes
-  while (minHeap.size() > 1) {
-    const first = minHeap.pop(); 
-    const second = minHeap.pop(); // Second smallest rope
+    // Sort the array initially
+    arr.sort((a, b) => a - b);
 
-    const cost = first + second;  // Cost of connecting the two ropes
-    totalCost += cost;            // Add cost to total
+    while (arr.length > 1) {
+        // Extract the two smallest ropes
+        let first = arr.shift();
+        let second = arr.shift();
 
-    minHeap.push(cost);  
+        // Calculate the cost of connecting them
+        let cost = first + second;
+        totalCost += cost;
+
+        // Insert the combined rope back into the array
+        arr.push(cost);
+
+        // Sort the array to keep the smallest ropes at the front
+        arr.sort((a, b) => a - b);
+    }
+
+    return totalCost;
 }
 
 module.exports=mincost;
